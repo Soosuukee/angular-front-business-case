@@ -1,0 +1,24 @@
+<main>
+  <section class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 p-4">
+    @for (announcement of announcements; track announcement.id) {
+    <div
+      class="bg-white rounded-xl shadow p-4 flex flex-col items-center text-center"
+    >
+      <img
+        [src]="announcement.imageCover"
+        alt="{{ announcement.title }}"
+        class="w-full h-48 object-cover rounded-md mb-2"
+      />
+      <h2 class="text-lg font-bold">{{ announcement.title }}</h2>
+      <h3 class="text-sm text-gray-600 italic">{{ announcement.city }}</h3>
+      <p class="text-sm text-gray-700 mt-1">
+        {{
+          announcement.dailyPrice
+            | currency : "EUR" : "symbol" : "1.0-0" : "fr-FR"
+        }}
+        / nuit
+      </p>
+    </div>
+    }
+  </section>
+</main>
