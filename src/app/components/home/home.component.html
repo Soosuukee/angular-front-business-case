@@ -1,24 +1,50 @@
-<main>
-  <section class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 p-4">
-    @for (announcement of announcements; track announcement.id) {
+<main class="space-y-10 p-6">
+  <section
+    *ngFor="let city of cities; let i = index"
+    class="relative h-[400px] w-full rounded-xl overflow-hidden shadow-lg transform transition duration-500 hover:scale-[1.02]"
+  >
+    <!-- Image de fond -->
     <div
-      class="bg-white rounded-xl shadow p-4 flex flex-col items-center text-center"
+      class="absolute inset-0 bg-no-repeat bg-cover bg-center"
+      [ngStyle]="{
+        'background-image':
+          'linear-gradient(to right, rgba(0,0,0,0.6), transparent), url(/assets/images/' +
+          city.image +
+          ')'
+      }"
+    ></div>
+
+    <!-- Contenu par-dessus -->
+    <div
+      class="relative z-10 h-full flex items-center justify-between px-10 text-white"
+      [ngClass]="{ 'flex-row-reverse': i % 2 !== 0 }"
     >
-      <img
-        [src]="announcement.imageCover"
-        alt="{{ announcement.title }}"
-        class="w-full h-48 object-cover rounded-md mb-2"
-      />
-      <h2 class="text-lg font-bold">{{ announcement.title }}</h2>
-      <h3 class="text-sm text-gray-600 italic">{{ announcement.city }}</h3>
-      <p class="text-sm text-gray-700 mt-1">
-        {{
-          announcement.dailyPrice
-            | currency : "EUR" : "symbol" : "1.0-0" : "fr-FR"
-        }}
-        / nuit
-      </p>
+      <!-- Ville -->
+      <h2 class="text-4xl font-bold drop-shadow-lg">{{ city.name }}</h2>
+
+      <!-- Annonce -->
+      <ng-container *ngIf="city.announcement">
+        <div
+          class="w-[300px] bg-white rounded-xl shadow p-4 text-center text-black"
+        >
+          <img
+            [src]="city.announcement.imageCover"
+            alt="{{ city.announcement.title }}"
+            class="w-full h-40 object-cover rounded-md mb-2"
+          />
+          <h2 class="text-lg font-bold">{{ city.announcement.title }}</h2>
+          <h3 class="text-sm text-gray-600 italic">
+            {{ city.announcement.city }}
+          </h3>
+          <p class="text-sm text-gray-700 mt-1">
+            {{
+              city.announcement.dailyPrice
+                | currency : "EUR" : "symbol" : "1.0-0" : "fr-FR"
+            }}
+            / nuit
+          </p>
+        </div>
+      </ng-container>
     </div>
-    }
   </section>
 </main>
