@@ -6,12 +6,13 @@ import { provideHttpClient } from '@angular/common/http';
 import { registerLocaleData } from '@angular/common';
 
 import localeFr from '@angular/common/locales/fr';
+import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 registerLocaleData(localeFr);
 
 export const appConfig: ApplicationConfig = {
   providers: [
     provideHttpClient(),
     provideZoneChangeDetection({ eventCoalescing: true }),
-    provideRouter(routes),
+    provideRouter(routes), provideAnimationsAsync(),
   ],
 };
